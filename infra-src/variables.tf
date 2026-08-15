@@ -3,6 +3,11 @@ variable "azure_function_app_name" {
   type        = string
 }
 
+variable "key_vault_name" {
+  description = "The globally unique Key Vault name used by the Function App."
+  type        = string
+}
+
 variable "azure_service_plan_name" {
   description = "The name of the Azure Service Plan"
   type        = string
@@ -134,9 +139,9 @@ variable "virtual_network_address_space" {
 variable "subnets" {
   description = "The list of subnets"
   type = map(object({
-    name              = string
-    address_prefixes  = list(string)
-    delegation        = optional(object({
+    name             = string
+    address_prefixes = list(string)
+    delegation = optional(object({
       name    = string
       actions = list(string)
     }))

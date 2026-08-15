@@ -1,4 +1,5 @@
 azure_function_app_name           = "mylab-func-app"
+key_vault_name                    = "mylab-func-kv"
 azure_service_plan_name           = "mylab-func-app-plan"
 apps_insights_name                = "myab-func-app-insights"
 application_type                  = "web"
@@ -12,6 +13,7 @@ location                          = "Sweden Central"
 resource_group_name               = "rg-dev"
 network_resource_group_name       = "rg-dev-network"
 private_dns_resource_group_name   = "rg-dev-network"
+public_network_access_enabled     = true
 scm_ip_restriction_default_action = "Allow"
 virtual_network_name              = "vnet-dev-func-app"
 virtual_network_address_space     = ["10.0.0.0/16"]

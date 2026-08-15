@@ -6,11 +6,11 @@ The central network repository from this URL https://github.com/chloe-teo/centra
 Use the values in the central network repo for the target environment. Do not create app-specific private DNS zones unless the network team explicitly approves an exception.
 
 ## Required workflow
-1. Read the target environment values file from the central network repo.
-2. Confirm the environment name and approved private DNS zone IDs.
-3. Use the approved shared DNS zone IDs for private endpoints.
-4. Use only approved private endpoint subnet IDs.
-5. Do not invent DNS IDs or private endpoint subnet values.
+1. Read `central-private-dns/generated/<environment>/approved-network-values.json` before designing or editing a private endpoint.
+2. Confirm that the file's environment matches the deployment environment.
+3. Find the approved private DNS zone ID for the target Azure service in `approved_private_dns_zones`.
+4. If the required service key is missing, stop and tell the developer that networking approval or regenerated central values are required; do not infer, construct, or hardcode a replacement ID.
+5. Use only the approved DNS zone ID and approved private endpoint subnet ID as inputs to the shared module.
 6. Never create private DNS zone resources in this application repo.
 7. Never create `azurerm_private_dns_zone` or `azurerm_private_dns_zone_virtual_network_link` resources in app code unless the network team explicitly approves a documented exception.
 
@@ -48,7 +48,7 @@ Use the central network values file rather than creating per-app private DNS zon
 ## Hard rule for future work
 When creating a new private endpoint for any Azure service, follow this sequence:
 1. Read the approved values from the central-private-dns generated environment file.
-2. Copy the approved DNS zone ID for the target service.
-3. Use the approved subnet ID for the private endpoint.
-4. Pass both values into the shared module.
+2. Confirm that the target service has an entry in `approved_private_dns_zones`.
+3. If it does not, report the missing entry and stop until the central network values are updated.
+4. Pass the approved DNS zone ID and subnet ID into the shared module.
 5. Do not create a new DNS zone or VNet link in this repo.

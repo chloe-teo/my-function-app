@@ -7,15 +7,17 @@
 - Prefer secure, reusable patterns over app-specific exceptions.
 - Use environment-specific configuration and approved shared values instead of inventing new infrastructure details.
 - Do not commit secrets, subscription IDs, or sensitive configuration values.
+- The agent should avoid `count` for repeatable or optional resource instances; use `for_each` whenever a resource can have multiple instances or can be conditionally represented as a collection.
 
 ## Relevant topic-specific guidance
 For private networking and private endpoint standards, follow the guidance in [private-networking-standards.md](private-networking-standards.md).
 
 ## Hard rule for private networking
 - Never create private DNS zones, VNet links, or app-specific DNS resources in this repo.
-- Always use the approved shared private DNS zone IDs from the central networking repo for private endpoints.
+- Before creating or modifying a private endpoint, read `central-private-dns/generated/<environment>/approved-network-values.json` and confirm the target service has an approved DNS zone ID.
 - Use only approved subnet IDs and VNet IDs from the central networking repo.
-- If a new Azure service needs a private endpoint, read the generated approved values and pass them into the shared module rather than creating new DNS resources.
+- If the required DNS zone entry is missing, tell the developer that central networking approval or regenerated values are required and stop; never infer, construct, or hardcode a replacement ID.
+- Pass the approved DNS zone ID and subnet ID into the shared module rather than creating new DNS resources.
 
 ## Best practice for network ownership
 - Keep app VNet and subnet variables separate from network-owned private DNS resource group values.

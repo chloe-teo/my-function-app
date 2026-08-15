@@ -1,6 +1,7 @@
 locals {
-  func_st = one(values(var.func_storage_account))
+  func_st                          = one(values(var.func_storage_account))
   storage_blob_private_dns_zone_id = "/subscriptions/${var.network_subscription_id}/resourceGroups/${var.private_dns_resource_group_name}/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"
+  key_vault_private_dns_zone_id    = "/subscriptions/${var.network_subscription_id}/resourceGroups/${var.private_dns_resource_group_name}/providers/Microsoft.Network/privateDnsZones/privatelink.vaultcore.azure.net"
   ip_restrictions = [
     for restriction in var.ip_restrictions : {
       name                      = restriction.name
@@ -61,6 +62,24 @@ module "function_app" {
   ip_restrictions                        = local.ip_restrictions
   virtual_network_subnet_id              = module.azure-vnet.subnet_ids[var.func_subnet_name]
   tags                                   = local.tags
+}
+
+module "key_vault" {
+  source = "../../azure-modules/azure-key-vault"
+
+  resource_group_name           = var.resource_group_name
+  location                      = var.location
+  key_vault_name                = var.key_vault_name
+  public_network_access_enabled = var.public_network_access_enabled
+  role_assignments = {
+    secrets_access = {
+      principal_id         = module.function_app.identity_principal_id
+      role_definition_name = "Key Vault Secrets Officer"
+    }
+  }
+  private_endpoint_subnet_id = module.azure-vnet.subnet_ids[var.private_endpoint_subnet_name]
+  private_dns_zone_ids       = [local.key_vault_private_dns_zone_id]
+  tags                       = local.tags
 }
 
 
