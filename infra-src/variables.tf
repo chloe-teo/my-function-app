@@ -89,14 +89,24 @@ variable "tags" {
 }
 
 variable "network_resource_group_name" {
-  description = "The name of the resource group containing the virtual network"
+  description = "The name of the resource group containing the virtual network for the application"
+  type        = string
+}
+
+variable "private_dns_resource_group_name" {
+  description = "The resource group owned by the network team that contains the shared private DNS zones"
+  type        = string
+}
+
+variable "network_subscription_id" {
+  description = "The Azure subscription ID owned by the network team that contains the shared private DNS zones"
   type        = string
 }
 
 variable "public_network_access_enabled" {
   description = "Should public network access be enabled for the Azure Function App"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "ip_restrictions" {
@@ -142,4 +152,9 @@ variable "func_subnet_name" {
 variable "private_endpoint_subnet_name" {
   type        = string
   description = "Name of the subnet for private endpoints"
+}
+
+variable "scm_ip_restriction_default_action" {
+  description = "The default action for SCM IP restrictions"
+  type        = string
 }

@@ -1,5 +1,6 @@
 locals {
   func_st = one(values(var.func_storage_account))
+  storage_blob_private_dns_zone_id = "/subscriptions/${var.network_subscription_id}/resourceGroups/${var.private_dns_resource_group_name}/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"
   ip_restrictions = [
     for restriction in var.ip_restrictions : {
       name                      = restriction.name
@@ -12,7 +13,7 @@ locals {
 }
 
 module "azure-vnet" {
-  source = "../../azure-modules/azure-virtual-network"
+  source = "git::git@github.com:chloe-teo/azure-modules.git///azure-virtual-network?ref=main"
 
   resource_group_name                 = var.network_resource_group_name
   azure_virtual_network_name          = var.virtual_network_name
@@ -54,45 +55,14 @@ module "function_app" {
   storage_account_access_tier            = local.func_st.access_tier
   containers                             = local.func_st.containers
   public_network_access_enabled          = var.public_network_access_enabled
+  storage_private_endpoint_subnet_id     = module.azure-vnet.subnet_ids[var.private_endpoint_subnet_name]
+  storage_blob_private_dns_zone_ids      = [local.storage_blob_private_dns_zone_id]
+  scm_ip_restriction_default_action      = var.scm_ip_restriction_default_action
   ip_restrictions                        = local.ip_restrictions
   virtual_network_subnet_id              = module.azure-vnet.subnet_ids[var.func_subnet_name]
   tags                                   = local.tags
 }
 
-module "blob_private_dns" {
-  source = "git::git@github.com:chloe-teo/azure-modules.git//azure-private-dns-zone?ref=main"
-
-  private_dns_zone_name     = "privatelink.blob.core.windows.net"
-  virtual_network_link_name = "blob-private-dns-link"
-  resource_group_name       = var.network_resource_group_name
-  virtual_network_id        = module.azure-vnet.id
-
-  tags = var.tags
-}
-
-
-resource "azurerm_private_endpoint" "storage_blob" {
-
-  name                = "pe-${module.function_app.storage_account_name}-blob"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  subnet_id           = module.azure-vnet.subnet_ids[var.private_endpoint_subnet_name]
-
-  private_service_connection {
-    name                           = "psc-${module.function_app.storage_account_name}-blob"
-    private_connection_resource_id = module.function_app.storage_account_id
-    is_manual_connection           = false
-    subresource_names              = ["blob"]
-  }
-
-  dynamic "private_dns_zone_group" {
-    for_each = length(module.blob_private_dns.private_dns_zone_id) == 0 ? [] : [module.blob_private_dns.private_dns_zone_id]
-    content {
-      name                 = "default"
-      private_dns_zone_ids = [private_dns_zone_group.value]
-    }
-  }
-}
 
 resource "azurerm_role_assignment" "function_storage_access" {
 

@@ -1,3 +1,5 @@
 tfplan
 .terraform.lock.hcl
 .terraform
+.vscode
+.set-env.md
