@@ -74,7 +74,7 @@ module "key_vault" {
   role_assignments = {
     secrets_access = {
       principal_id         = module.function_app.identity_principal_id
-      role_definition_name = "Key Vault Secrets Officer"
+      role_definition_name = "Key Vault Secrets User"
     }
   }
   private_endpoint_subnet_id = module.azure-vnet.subnet_ids[var.private_endpoint_subnet_name]
