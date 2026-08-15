@@ -149,9 +149,9 @@ variable "subnets" {
   }))
 }
 
-variable "func_subnet_name" {
+variable "func_outbound_subnet_name" {
   type        = string
-  description = "Name of the Function App integration subnet"
+  description = "Name of the Function App Outbound integration subnet"
 }
 
 variable "private_endpoint_subnet_name" {

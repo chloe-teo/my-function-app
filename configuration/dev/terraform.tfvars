@@ -38,7 +38,7 @@ func_storage_account = {
   }
 }
 
-func_subnet_name             = "subnet-dev-function"
+func_outbound_subnet_name    = "subnet-dev-function"
 private_endpoint_subnet_name = "subnet-dev-other"
 
 ip_restrictions = [

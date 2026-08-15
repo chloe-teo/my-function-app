@@ -2,6 +2,7 @@ locals {
   func_st                          = one(values(var.func_storage_account))
   storage_blob_private_dns_zone_id = "/subscriptions/${var.network_subscription_id}/resourceGroups/${var.private_dns_resource_group_name}/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"
   key_vault_private_dns_zone_id    = "/subscriptions/${var.network_subscription_id}/resourceGroups/${var.private_dns_resource_group_name}/providers/Microsoft.Network/privateDnsZones/privatelink.vaultcore.azure.net"
+  function_private_dns_zone_id     = "/subscriptions/${var.network_subscription_id}/resourceGroups/${var.private_dns_resource_group_name}/providers/Microsoft.Network/privateDnsZones/privatelink.azurewebsites.net"
   ip_restrictions = [
     for restriction in var.ip_restrictions : {
       name                      = restriction.name
@@ -35,7 +36,7 @@ module "app_insight" {
 }
 
 module "function_app" {
-  source = "git::git@github.com:chloe-teo/azure-modules.git//azure-function-app?ref=main"
+  source = "../../azure-modules/azure-function-app"
 
   application_insights_key               = module.app_insight.instrumentation_key
   application_insights_connection_string = module.app_insight.connection_string
@@ -55,12 +56,14 @@ module "function_app" {
   storage_account_replication_type       = local.func_st.account_replication_type
   storage_account_access_tier            = local.func_st.access_tier
   containers                             = local.func_st.containers
-  public_network_access_enabled          = var.public_network_access_enabled
+  public_network_access_enabled          = var.public_network_access_enabled && var.private_endpoint_subnet_name == null
+  private_endpoint_subnet_id             = var.private_endpoint_subnet_name == null ? null : module.azure-vnet.subnet_ids[var.private_endpoint_subnet_name]
+  private_dns_zone_ids                   = var.private_endpoint_subnet_name == null ? [] : [local.function_private_dns_zone_id]
   storage_private_endpoint_subnet_id     = module.azure-vnet.subnet_ids[var.private_endpoint_subnet_name]
   storage_blob_private_dns_zone_ids      = [local.storage_blob_private_dns_zone_id]
   scm_ip_restriction_default_action      = var.scm_ip_restriction_default_action
   ip_restrictions                        = local.ip_restrictions
-  virtual_network_subnet_id              = module.azure-vnet.subnet_ids[var.func_subnet_name]
+  virtual_network_subnet_id              = module.azure-vnet.subnet_ids[var.func_outbound_subnet_name]
   tags                                   = local.tags
 }
 

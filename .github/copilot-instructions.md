@@ -14,7 +14,7 @@ For private networking and private endpoint standards, follow the guidance in [p
 
 ## Hard rule for private networking
 - Never create private DNS zones, VNet links, or app-specific DNS resources in this repo.
-- Before creating or modifying a private endpoint, read `central-private-dns/generated/<environment>/approved-network-values.json` and confirm the target service has an approved DNS zone ID.
+- Before creating or modifying a private endpoint, or before creating variables for a new private DNS zone type, must read `central-private-dns/generated/<environment>/approved-network-values.json` and confirm the target service has an approved DNS zone ID.
 - Use only approved subnet IDs and VNet IDs from the central networking repo.
 - If the required DNS zone entry is missing, tell the developer that central networking approval or regenerated values are required and stop; never infer, construct, or hardcode a replacement ID.
 - Pass the approved DNS zone ID and subnet ID into the shared module rather than creating new DNS resources.

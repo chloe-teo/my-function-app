@@ -6,7 +6,7 @@ The central network repository from this URL https://github.com/chloe-teo/centra
 Use the values in the central network repo for the target environment. Do not create app-specific private DNS zones unless the network team explicitly approves an exception.
 
 ## Required workflow
-1. Read `central-private-dns/generated/<environment>/approved-network-values.json` before designing or editing a private endpoint.
+1. Must read `central-private-dns/generated/<environment>/approved-network-values.json` before designing or editing a private endpoint, and before adding variables for a new private DNS zone type.
 2. Confirm that the file's environment matches the deployment environment.
 3. Find the approved private DNS zone ID for the target Azure service in `approved_private_dns_zones`.
 4. If the required service key is missing, stop and tell the developer that networking approval or regenerated central values are required; do not infer, construct, or hardcode a replacement ID.
@@ -46,7 +46,7 @@ For storage private endpoints, use the approved shared zone IDs for:
 Use the central network values file rather than creating per-app private DNS zones.
 
 ## Hard rule for future work
-When creating a new private endpoint for any Azure service, follow this sequence:
+When creating a new private endpoint for any Azure service, or adding variables for a new private DNS zone type, must follow this sequence:
 1. Read the approved values from the central-private-dns generated environment file.
 2. Confirm that the target service has an entry in `approved_private_dns_zones`.
 3. If it does not, report the missing entry and stop until the central network values are updated.
