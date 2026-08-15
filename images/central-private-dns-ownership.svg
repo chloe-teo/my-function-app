@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Central private DNS ownership and approved resource ID discovery</title>
+  <desc id="desc">The network team owns the central private DNS repository and publishes approved global private DNS zone IDs. Copilot instructions in the developer repository direct private endpoint creation to discover and use the approved ID.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fbff"/><stop offset="1" stop-color="#eef7f2"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#164e63" flood-opacity=".13"/></filter>
+    <marker id="blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#0e7490"/></marker>
+    <marker id="green" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#16805b"/></marker>
+    <marker id="orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#c2410c"/></marker>
+    <style>
+      .title { font:700 31px 'Segoe UI',sans-serif; fill:#0f172a; }
+      .h { font:700 19px 'Segoe UI',sans-serif; fill:#0f172a; }
+      .hSmall { font:700 17px 'Segoe UI',sans-serif; fill:#0f172a; }
+      .p { font:400 15px 'Segoe UI',sans-serif; fill:#475569; }
+      .tiny { font:700 13px 'Segoe UI',sans-serif; fill:#64748b; letter-spacing:1.5px; }
+      .white { font:700 15px 'Segoe UI',sans-serif; fill:#fff; letter-spacing:1.4px; }
+      .icon { font:700 24px 'Segoe UI',sans-serif; fill:#fff; text-anchor:middle; }
+      .code { font:600 14px 'Cascadia Mono','Consolas',monospace; fill:#075985; }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/><circle cx="1480" cy="70" r="220" fill="#ccebe5" opacity=".6"/><circle cx="80" cy="820" r="170" fill="#d8edf5" opacity=".65"/>
+  <text x="70" y="70" class="tiny">PRIVATE NETWORK GOVERNANCE</text><text x="70" y="117" class="title">Central DNS ownership to private endpoint creation</text><text x="70" y="150" class="p">The network team publishes the approved global zone ID; developer infrastructure consumes that value through repository guidance.</text>
+  <rect x="60" y="215" width="430" height="555" rx="20" fill="#fff" stroke="#67e8f9" stroke-width="3" filter="url(#shadow)"/><rect x="60" y="215" width="430" height="58" rx="20" fill="#0e7490"/><rect x="60" y="253" width="430" height="20" fill="#0e7490"/><text x="92" y="252" class="white">NETWORK TEAM OWNERSHIP</text>
+  <g transform="translate(100 315)"><rect width="72" height="72" rx="15" fill="#24292f"/><path d="M18 22h36v28H18Z" fill="none" stroke="#fff" stroke-width="4"/><path d="M25 31h22M25 40h16" stroke="#fff" stroke-width="4"/></g><text x="205" y="340" class="h">central-private-dns</text><text x="205" y="369" class="p">Network-owned source of truth</text>
+  <text x="100" y="455" class="tiny">PUBLISHED VALUES</text><rect x="100" y="480" width="350" height="94" rx="12" fill="#f0f9ff" stroke="#7dd3fc"/><text x="122" y="510" class="hSmall">Approved and global zones</text><text x="122" y="538" class="p">Shared lifecycle, links and ownership</text><text x="122" y="562" class="p">No app-specific DNS zones</text>
+  <text x="100" y="628" class="tiny">GENERATED CONTRACT</text><text x="100" y="660" class="code">generated/&lt;environment&gt;/</text><text x="100" y="688" class="code">approved-network-values.json</text><text x="100" y="728" class="p">owner: network-team</text>
+  <rect x="585" y="215" width="430" height="555" rx="20" fill="#fff" stroke="#c4b5fd" stroke-width="3" filter="url(#shadow)"/><rect x="585" y="215" width="430" height="58" rx="20" fill="#4c1d95"/><rect x="585" y="253" width="430" height="20" fill="#4c1d95"/><text x="617" y="252" class="white">DEVELOPER REPOSITORY GUIDANCE</text>
+  <g transform="translate(625 315)"><polygon points="36,0 68,18 68,54 36,72 4,54 4,18" fill="#7c3aed"/><text x="36" y="47" class="icon">T</text></g><text x="730" y="340" class="h">.github/copilot-instructions.md</text><text x="730" y="369" class="p">Sets the private networking workflow</text>
+  <text x="625" y="455" class="tiny">COPILOT DISCOVERY STEPS</text><rect x="625" y="480" width="350" height="176" rx="12" fill="#faf5ff" stroke="#c4b5fd"/><text x="650" y="515" class="hSmall">1  Read the environment file</text><text x="650" y="548" class="hSmall">2  Find the service key</text><text x="650" y="581" class="hSmall">3  Use the approved zone ID</text><text x="650" y="614" class="hSmall">4  Stop if approval is missing</text><text x="625" y="710" class="p">Never infer, hardcode or create a replacement zone.</text>
+  <rect x="1110" y="215" width="430" height="555" rx="20" fill="#fff" stroke="#fdba74" stroke-width="3" filter="url(#shadow)"/><rect x="1110" y="215" width="430" height="58" rx="20" fill="#c2410c"/><rect x="1110" y="253" width="430" height="20" fill="#c2410c"/><text x="1142" y="252" class="white">PRIVATE ENDPOINT CREATION</text>
+  <g transform="translate(1150 315)"><rect x="4" y="8" width="64" height="52" rx="9" fill="#ea580c"/><path d="M17 45h38M25 45V30M36 45V20M47 45V26" stroke="#fff" stroke-width="5"/></g><text x="1255" y="340" class="h">Shared private endpoint module</text><text x="1255" y="369" class="p">Consumes approved network inputs</text>
+  <text x="1150" y="455" class="tiny">INPUTS</text><rect x="1150" y="480" width="350" height="105" rx="12" fill="#fff7ed" stroke="#fdba74"/><text x="1175" y="515" class="hSmall">private_dns_zone_ids</text><text x="1175" y="544" class="code">/subscriptions/$ARM_SUBSCRIPTION_ID/...</text><text x="1175" y="570" class="p">plus the approved endpoint subnet ID</text>
+  <rect x="1150" y="620" width="350" height="90" rx="12" fill="#f0fdf4" stroke="#86efac"/><text x="1175" y="653" class="hSmall">Result: private access</text><text x="1175" y="682" class="p">Endpoint uses the central global zone</text>
+  <path d="M490 455H565" fill="none" stroke="#16805b" stroke-width="4" marker-end="url(#green)"/><text x="500" y="425" class="tiny">PUBLISH</text><path d="M1015 455H1090" fill="none" stroke="#c2410c" stroke-width="4" marker-end="url(#orange)"/><text x="1028" y="425" class="tiny">PASS ID</text><path d="M1035 590H1090" fill="none" stroke="#0e7490" stroke-width="3" stroke-dasharray="8 8" marker-end="url(#blue)"/><text x="1020" y="560" class="tiny">APPROVED</text>
+  <text x="70" y="835" class="tiny">OWNERSHIP BOUNDARY</text><text x="260" y="835" class="p">Network team creates and governs zones</text><line x1="665" y1="829" x2="720" y2="829" stroke="#16805b" stroke-width="4"/><text x="735" y="835" class="p">Approved value flow</text><line x1="965" y1="829" x2="1020" y2="829" stroke="#c2410c" stroke-width="3" stroke-dasharray="8 8"/><text x="1035" y="835" class="p">Private endpoint input</text>
+  <text x="70" y="875" class="p">One central zone lifecycle, many developer consumers, and no guessed Azure resource IDs.</text>
+</svg>
